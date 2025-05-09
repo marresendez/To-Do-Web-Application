@@ -10,6 +10,7 @@ urlpatterns = [
     path('register/', todo_views.register, name='register'),
     path('login/', todo_views.login, name='login'),
     path('logout/', views.logout_view, name='logout'),
-    # path('task/<int:task_id>/update/', todo_views.update_status, name='update_status'),
-    # path('create/', todo_views.create_task, name='create_task'),
+    path('task/<int:task_id>/edit/', views.edit_task, name='edit_task'),
+    # path('task/<int:task_id>/delete', views.delete_task, name = 'delete_task'),
+    
 ]

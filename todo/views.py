@@ -38,35 +38,63 @@ from django.contrib.auth.decorators import login_required
 from .models import Task
 from .forms import TaskForm
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 
 User = get_user_model()
 
 @login_required
 def task_list(request):
-    # tasks = Task.objects.all()
-    return render(request, 'todo/task_list.html')#, {'tasks': tasks})
+    # tasks = request.user.tasks.all() #use when filtering for specific user, later feature
+    tasks = Task.objects.all()
+
+    form = None
+    if request.user.is_staff:
+        if request.method == 'POST':
+            form = TaskForm(request.POST)
+            if form.is_valid():
+                task = form.save()
+                assigned = request.POST.getlist('assigned_users')
+                task.assigned_users.set(assigned)
+                return redirect('task_list')
+            else:
+                form = TaskForm()
+    
+    return render(request, 'todo/task_list.html', {'tasks': tasks, 'is_admin': request.user.is_staff, 'form': form})
+
+@login_required
+def edit_task(request, task_id):
+
+    task = get_object_or_404(Task, id=task_id)
+
+    # if not request.user.is_staff and request.user not in task.assigned_users.all():
+    #     return redirect('task_list')
+
+    # if user is admin -> admin side
+    if request.user.is_staff:
+        if request.method == 'POST':
+            if 'delete' in request.POST:
+                task.delete()
+                return redirect('task_list')
+            form = TaskForm(request.POST, instance=task)
+            if form.is_valid():
+                form.save()
+            return redirect('task_list')
+        else:
+            form = TaskForm(instance=task)
+        return render(request, 'todo/edit_task.html', {'form': form, 'task': task})
+    
+    #user must be regular -> user side
+    if request.method == 'POST':
+        task.status = request.POST['status']
+        task.save()
+        return redirect('task_list')
+        
+    return render(request, 'todo/update_task.html', {'task': task})
 
 # @login_required
-# def update_status(request, task_id):
-#     task = Task.objects.get(id=task_id)
-#     if request.user in task.assigned_users.all():
-#         if request.method == 'POST':
-#             task.status = request.POST.get('status')
-#             task.save()
-#             return redirect('task_list')
-#     return render(request, 'update_status.html', {'task': task})
+# def delete_task(request, task_id):
+#     task = get_object_or_404(Task, id=task_id)
 
-# @login_required
-# def create_task(request):
-#     if request.user.user_type != 'admin':
+#     if request.user.is_staff:
+#         task.delete()
 #         return redirect('task_list')
-#     if request.method == 'POST':
-#         form = TaskForm(request.POST)
-#         if form.is_valid():
-#             task = form.save()
-#             assigned = request.POST.getlist('assigned_users')
-#             task.assigned_users.set(assigned)
-#             return redirect('task_list')
-#     else:
-#         form = TaskForm()
-#     return render(request, 'create_task.html', {'form': form})

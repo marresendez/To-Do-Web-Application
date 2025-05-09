@@ -23,9 +23,9 @@ from django.utils import timezone
 
 class Task(models.Model):
     STATUS_CHOICES = (
-        ('todo', 'To Do'),
-        ('in_progress', 'In Progress'),
-        ('done', 'Done'),
+        ('To Do', 'To Do'),
+        ('In Progress', 'In Progress'),
+        ('Done', 'Done'),
     )
 
     name = models.CharField(max_length=255)

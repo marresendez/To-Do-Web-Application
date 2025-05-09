@@ -16,8 +16,10 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class TaskForm(forms.ModelForm):
-    assigned_users = forms.ModelMultipleChoiceField(queryset=User.objects.all())
 
     class Meta:
         model = Task
         fields = ['name', 'description', 'due_date', 'status', 'assigned_users']
+        widgets = {
+            'assigned_users': forms.CheckboxSelectMultiple,
+        }

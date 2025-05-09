@@ -1,0 +1,11 @@
+<h2>Update Task Status</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="status">Status:</label>
+    <select name="status">
+        <option value="todo" {% if task.status == 'todo' %}selected{% endif %}>To Do</option>
+        <option value="in_progress" {% if task.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+        <option value="done" {% if task.status == 'done' %}selected{% endif %}>Done</option>
+    </select>
+    <button type="submit">Update</button>
+</form>

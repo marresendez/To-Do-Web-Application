@@ -1,0 +1,7 @@
+<h2>Edit Task</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+    <button type="dsubmit" name="delete" onclick="return confirm('Are you sure you want to delete this task?');"> Delete </button>
+</form>
