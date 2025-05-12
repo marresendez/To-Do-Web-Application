@@ -12,7 +12,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             print("User created:", user)
-            login(request, user)
+            auth_login(request, user)
             return redirect('task_list')
         else: 
             print("Form errors:", form.errors)
