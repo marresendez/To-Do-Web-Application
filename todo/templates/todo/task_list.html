@@ -60,13 +60,13 @@
             </div>
 
             {% for task in tasks %}
-                <li>{{ task.name }} - {{ task.status }}</li>
+                <li>{{ task.name }} - {{ task.status }} - {{task.description}}</li>
                 <a href="{% url 'edit_task' task.id %}">Edit</a>
             {% endfor %}
             
         {% else %} <!-- regular users view -->
             {% for task in tasks %}
-                <li>{{ task.name }} - {{ task.status }}</li>
+                <li>{{ task.name }} - {{ task.status }} - {{task.description}}</li>
                 <a href="{% url 'edit_task' task.id %}">Update Status</a>
             {% empty %}
                 <p>No tasks yet. Chill out for now!</p>

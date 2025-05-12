@@ -10,7 +10,7 @@
                 text-align: center;
                 margin-top: 5%;
             }
-            p{
+            div{
                 text-align: center;
                 margin-top: 5%;
             }
@@ -56,9 +56,13 @@
     <body>
         
         <h2>To Do App</h2>
-        <p>Welcome! Would you like to start a session? <a href="{% url 'login' %}">Login</a></p>
-               
+        <div>
+            <p>Welcome! Would you like to start a session?</p>
+               <a href="{% url 'login' %}"><button>Login</button></a>
         
-        <p>Don't have an account yet? <a href="{% url 'register' %}">Sign Up Here</a></p>
+            <p>Don't have an account yet?</p>
+                <a href="{% url 'register' %}"><button>Sign Up Here</button></a>
+        </div>
+        
     </body>
 </html>
