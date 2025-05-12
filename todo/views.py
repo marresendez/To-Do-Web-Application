@@ -3,6 +3,9 @@ from django.contrib.auth import login as auth_login, authenticate, logout
 from .forms import CustomUserCreationForm
 
 # Create your views here.
+def landing(request):
+    return render(request, 'todo/landing.html')
+
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)

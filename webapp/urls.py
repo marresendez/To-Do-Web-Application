@@ -21,5 +21,5 @@ from django.shortcuts import redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('todo/', include("todo.urls")),
-    path('', lambda request: redirect('register')),
+    path('', lambda request: redirect('landing')),
 ]

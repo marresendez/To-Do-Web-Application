@@ -11,6 +11,7 @@ urlpatterns = [
     path('login/', todo_views.login, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('task/<int:task_id>/edit/', views.edit_task, name='edit_task'),
+    path('', views.landing, name='landing')
     # path('task/<int:task_id>/delete', views.delete_task, name = 'delete_task'),
     
 ]
